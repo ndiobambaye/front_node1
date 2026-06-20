@@ -13,12 +13,14 @@ const ProfilUtilisateur = () => {
 
   const userConnecte = JSON.parse(localStorage.getItem('user') || 'null')
   const estMonProfil = userConnecte && (userConnecte.id === id || userConnecte._id === id)
+  const { inscription, connexion, getProfil } = require('../controllers/user.controller');
+
 
   useEffect(() => {
     const charger = async () => {
       setLoading(true)
       try {
-        const response = await fetch(`/api/utilisateurs/${id}`)
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/utilisateurs/${id}`)
         const result = await response.json()
         if (response.ok) {
           setProfil(result.user)
