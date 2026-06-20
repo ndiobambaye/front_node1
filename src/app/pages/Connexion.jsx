@@ -44,7 +44,7 @@ const Connexion = () => {
                    localStorage.setItem("user", JSON.stringify(result.user));
                 }
                 alert(`Connexion réussie ` );
-                navigate('/');
+                navigate('/accueil');
                 
             } else {
                 alert(result.message || "Identifiants incorrects");
