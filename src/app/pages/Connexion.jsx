@@ -39,17 +39,17 @@ const Connexion = () => {
                  password
                  });
 
-            if (response.ok) {
-                if (result.token) {
-                   localStorage.setItem("user", JSON.stringify(result.user));
-                }
-                alert(`Connexion réussie ` );
-                navigate('/accueil');
-                
-            } else {
-                alert(result.message || "Identifiants incorrects");
+         if (response.ok) {
+             if (result.token) {
+              localStorage.setItem("token", result.token);
+              localStorage.setItem("user", JSON.stringify(result.user));
+             }
+                alert(`Connexion réussie `);
+                   navigate('/accueil');
+    
+                } else {
+                 alert(result.message || "Identifiants incorrects");
             }
-
         } catch (error) {
             console.error(error);
             alert("Erreur serveur. Veuillez réessayer.");
