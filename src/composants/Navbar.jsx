@@ -104,7 +104,7 @@ const Navbar = () => {
                     </div>
 
                     <Link
-                      to={`/accueil/profil/${user._id || user.id}`}
+                      to={`/accueil/profil/${user.id}`}
                       onClick={() => setDropdown(false)}
                       className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                     >
