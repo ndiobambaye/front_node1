@@ -12,7 +12,7 @@ const App = () => {
   const router = createBrowserRouter([
 
     // route de la connexion
-    { path: '/', element: <Connexion /> },
+    { path: '/', element: <Connexion/> },
     // route de l'inscription
     { path: '/inscription', element: <Inscription /> },
     // route de l'accueil
