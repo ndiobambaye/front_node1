@@ -31,7 +31,7 @@ const Inscription = () => {
         };
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/connexion`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/inscription`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
