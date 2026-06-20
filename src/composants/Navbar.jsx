@@ -53,12 +53,7 @@ const Navbar = () => {
           <Link to="/accueil" className="text-sm text-gray-700 px-2.5 py-1.5 rounded hover:bg-gray-100 whitespace-nowrap">
             Questions
           </Link>
-          <Link to="/accueil/tags" className="text-sm text-gray-700 px-2.5 py-1.5 rounded hover:bg-gray-100 whitespace-nowrap">
-            Tags
-          </Link>
-          <Link to="/accueil/utilisateurs" className="text-sm text-gray-700 px-2.5 py-1.5 rounded hover:bg-gray-100 whitespace-nowrap">
-            Utilisateurs
-          </Link>
+          
         </nav>
 
         {/* Recherche */}
@@ -100,7 +95,7 @@ const Navbar = () => {
                     </div>
 
                     <Link
-                      to={`/accueil/utilisateurs/${user.id}`}
+                       to={`/accueil/profil/${user._id || user.id}`}
                       onClick={() => setDropdown(false)}
                       className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                     >
@@ -114,7 +109,7 @@ const Navbar = () => {
                       Poser une question
                     </Link>
                     <Link
-                      to="/accueil/tags"
+                    
                       onClick={() => setDropdown(false)}
                       className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                     >
