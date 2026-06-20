@@ -53,18 +53,27 @@ const Navbar = () => {
           <Link to="/accueil" className="text-sm text-gray-700 px-2.5 py-1.5 rounded hover:bg-gray-100 whitespace-nowrap">
             Questions
           </Link>
-          
+          {/* Tags et Utilisateurs retires temporairement - pages non encore creees
+          <Link to="/accueil/tags" className="text-sm text-gray-700 px-2.5 py-1.5 rounded hover:bg-gray-100 whitespace-nowrap">
+            Tags
+          </Link>
+          <Link to="/accueil/utilisateurs" className="text-sm text-gray-700 px-2.5 py-1.5 rounded hover:bg-gray-100 whitespace-nowrap">
+            Utilisateurs
+          </Link>
+          */}
         </nav>
 
-        {/* Recherche */}
-        <form onSubmit={handleSearch} className="flex-1 max-w-xl relative">
-          <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm pointer-events-none">🔍</span>
+        {/* Barre de recherche */}
+        <form onSubmit={handleSearch} className="relative flex-1 max-w-md">
+          <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm pointer-events-none">
+            🔍
+          </span>
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Rechercher..."
-            className="w-full pl-8 pr-3 py-1.5 border border-gray-300 rounded text-sm bg-white outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors"
+            className="w-full pl-8 pr-3 py-1.5 border border-gray-300 rounded text-sm bg-white outline-none focus:border-blue-400"
           />
         </form>
 
@@ -74,7 +83,7 @@ const Navbar = () => {
             <>
               <Link
                 to="/accueil/poser"
-                className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1.5 rounded transition-colors whitespace-nowrap"
+                className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1.5 rounded transition-colors"
               >
                 Poser une question
               </Link>
@@ -82,25 +91,26 @@ const Navbar = () => {
               <div className="relative" ref={dropRef}>
                 <button
                   onClick={() => setDropdown(v => !v)}
-                  className="w-8 h-8 rounded bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-xs font-bold flex items-center justify-center transition-colors"
+                  className="w-8 h-8 rounded bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-xs font-bold"
                 >
                   {initiales}
                 </button>
 
                 {dropdown && (
-                  <div className="absolute right-0 top-10 bg-white border border-gray-200 rounded-lg min-w-[210px] shadow-lg z-50 overflow-hidden">
+                  <div className="absolute right-0 top-10 bg-white border border-gray-200 rounded-lg min-w-[210px] shadow-lg">
                     <div className="px-4 py-3 border-b border-gray-100 bg-gray-50">
                       <p className="text-sm font-semibold text-gray-900">{user.prenom} {user.nom}</p>
                       <p className="text-xs text-gray-400 mt-0.5">{user.email}</p>
                     </div>
 
                     <Link
-                       to={`/accueil/profil/${user._id || user.id}`}
+                      to={`/accueil/profil/${user._id || user.id}`}
                       onClick={() => setDropdown(false)}
                       className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                     >
                       Mon profil
                     </Link>
+
                     <Link
                       to="/accueil/poser"
                       onClick={() => setDropdown(false)}
@@ -108,13 +118,16 @@ const Navbar = () => {
                     >
                       Poser une question
                     </Link>
+
+                    {/* Tags retire temporairement
                     <Link
-                    
+                      to="/accueil/tags"
                       onClick={() => setDropdown(false)}
                       className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                     >
                       Tags
                     </Link>
+                    */}
 
                     <div className="border-t border-gray-100" />
 
@@ -133,10 +146,7 @@ const Navbar = () => {
               <Link to="/" className="text-sm text-blue-500 hover:text-blue-600 px-3 py-1.5 font-medium">
                 Connexion
               </Link>
-              <Link
-                to="/inscription"
-                className="text-sm bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded transition-colors"
-              >
+              <Link to="/inscription" className="text-sm bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded transition-colors">
                 S'inscrire
               </Link>
             </>
