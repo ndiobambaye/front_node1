@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-const PoserQuestion = () => {
+  const PoserQuestion = () => {
   const navigate = useNavigate()
   const [titre, setTitre] = useState('')
   const [contenu, setContenu] = useState('')
@@ -51,7 +51,7 @@ const PoserQuestion = () => {
 
     setLoading(true)
     try {
-      const response = await fetch('/api/questions', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/questions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
