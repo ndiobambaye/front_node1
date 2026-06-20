@@ -13,7 +13,7 @@ const ProfilUtilisateur = () => {
 
   const userConnecte = JSON.parse(localStorage.getItem('user') || 'null')
   const estMonProfil = userConnecte && (userConnecte.id === id || userConnecte._id === id)
-  const { inscription, connexion, getProfil } = require('../controllers/user.controller');
+ 
 
 
   useEffect(() => {
