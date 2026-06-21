@@ -34,17 +34,66 @@ const Detail = () => {
     charger()
   }, [id])
 
+  const verifierConnexion = () => {
+    if (!token) {
+      toast.error('Vous devez etre connecte')
+      navigate('/')
+      return false
+    }
+    return true
+  }
+
+  const voterQuestion = async (valeur) => {
+    if (!verifierConnexion()) return
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/questions/${id}/vote`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ valeur }),
+      })
+      const result = await response.json()
+      if (response.ok) {
+        setQuestion({ ...question, votes: result.votes })
+      } else {
+        toast.error(result.message || 'Erreur lors du vote')
+      }
+    } catch (error) {
+      toast.error('Serveur inaccessible.')
+    }
+  }
+
+  const voterReponse = async (repId, valeur) => {
+    if (!verifierConnexion()) return
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/questions/${id}/reponses/${repId}/vote`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ valeur }),
+      })
+      const result = await response.json()
+      if (response.ok) {
+        setReponses(reponses.map(r => r._id === repId ? { ...r, votes: result.votes } : r))
+      } else {
+        toast.error(result.message || 'Erreur lors du vote')
+      }
+    } catch (error) {
+      toast.error('Serveur inaccessible.')
+    }
+  }
+
   const envoyerReponse = async (e) => {
     e.preventDefault()
     if (!nouvelleReponse.trim()) {
       toast.error('La reponse ne peut pas etre vide')
       return
     }
-    if (!token) {
-      toast.error('Vous devez etre connecte pour repondre')
-      navigate('/')
-      return
-    }
+    if (!verifierConnexion()) return
 
     setEnvoi(true)
     try {
@@ -98,9 +147,28 @@ const Detail = () => {
         ))}
       </div>
 
-      <p className="text-sm text-gray-800 whitespace-pre-wrap mb-8 leading-relaxed">
-        {question.contenu}
-      </p>
+      <div className="flex gap-4 mb-6">
+        {/* Boutons de vote question */}
+        <div className="flex flex-col items-center gap-1">
+          <button
+            onClick={() => voterQuestion(1)}
+            className="w-8 h-8 flex items-center justify-center rounded border border-gray-300 hover:bg-gray-100 text-gray-600"
+          >
+            ▲
+          </button>
+          <span className="text-sm font-semibold text-gray-900">{question.votes || 0}</span>
+          <button
+            onClick={() => voterQuestion(-1)}
+            className="w-8 h-8 flex items-center justify-center rounded border border-gray-300 hover:bg-gray-100 text-gray-600"
+          >
+            ▼
+          </button>
+        </div>
+
+        <p className="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed flex-1">
+          {question.contenu}
+        </p>
+      </div>
 
       <h2 className="text-lg font-semibold text-gray-900 mb-4">
         {reponses.length} reponse{reponses.length !== 1 ? 's' : ''}
@@ -111,11 +179,30 @@ const Detail = () => {
           <p className="text-sm text-gray-500">Aucune reponse pour le moment. Soyez le premier a repondre !</p>
         ) : (
           reponses.map(rep => (
-            <div key={rep._id} className="border border-gray-200 rounded p-4">
-              <p className="text-sm text-gray-800 whitespace-pre-wrap mb-2">{rep.contenu}</p>
-              <div className="text-xs text-gray-500">
-                {rep.auteur?.prenom} {rep.auteur?.nom} ·{' '}
-                {new Date(rep.createdAt).toLocaleDateString('fr-FR')}
+            <div key={rep._id} className="border border-gray-200 rounded p-4 flex gap-4">
+              {/* Boutons de vote reponse */}
+              <div className="flex flex-col items-center gap-1">
+                <button
+                  onClick={() => voterReponse(rep._id, 1)}
+                  className="w-7 h-7 flex items-center justify-center rounded border border-gray-300 hover:bg-gray-100 text-gray-600 text-sm"
+                >
+                  ▲
+                </button>
+                <span className="text-sm font-semibold text-gray-900">{rep.votes || 0}</span>
+                <button
+                  onClick={() => voterReponse(rep._id, -1)}
+                  className="w-7 h-7 flex items-center justify-center rounded border border-gray-300 hover:bg-gray-100 text-gray-600 text-sm"
+                >
+                  ▼
+                </button>
+              </div>
+
+              <div className="flex-1">
+                <p className="text-sm text-gray-800 whitespace-pre-wrap mb-2">{rep.contenu}</p>
+                <div className="text-xs text-gray-500">
+                  {rep.auteur?.prenom} {rep.auteur?.nom} ·{' '}
+                  {new Date(rep.createdAt).toLocaleDateString('fr-FR')}
+                </div>
               </div>
             </div>
           ))
