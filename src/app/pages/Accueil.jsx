@@ -1,54 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 
-// ─── Donnees de demonstration (a remplacer par un fetch API) ────
-const QUESTIONS_DEMO = [
-  {
-    id: 1,
-    titre: 'Comment utiliser useEffect dans React pour recuperer des donnees ?',
-    contenu: "Je debute avec React et je souhaite recuperer des donnees depuis une API avec useEffect.",
-    auteur: 'Aminata Ndiaye',
-    tags: ['react', 'javascript'],
-    votes: 12,
-    reponses: 3,
-    resolue: true,
-    date: '2026-06-15T09:15:00',
-  },
-  {
-    id: 2,
-    titre: 'Pourquoi mon serveur Express retourne une erreur 404 ?',
-    contenu: "J'ai cree une route GET /users mais lorsque je fais une requete depuis Postman, je recois une erreur 404.",
-    auteur: 'Mamadou Diallo',
-    tags: ['nodejs', 'express'],
-    votes: 5,
-    reponses: 1,
-    resolue: false,
-    date: '2026-06-15T10:30:00',
-  },
-  {
-    id: 3,
-    titre: 'Comment connecter Spring Boot a une base de donnees MySQL ?',
-    contenu: "Mon application Spring Boot ne parvient pas a se connecter a MySQL.",
-    auteur: 'Fatou Sow',
-    tags: ['java', 'spring-boot', 'mysql'],
-    votes: 8,
-    reponses: 0,
-    resolue: false,
-    date: '2026-06-15T11:45:00',
-  },
-  {
-    id: 4,
-    titre: 'Difference entre let, const et var en JavaScript ?',
-    contenu: "Je ne comprends pas bien la difference de portee entre ces trois mots-cles.",
-    auteur: 'Ibrahima Fall',
-    tags: ['javascript'],
-    votes: 21,
-    reponses: 5,
-    resolue: true,
-    date: '2026-06-14T08:00:00',
-  },
-]
-
 const TAGS_COULEURS = {
   react: '#61dafb22',
   javascript: '#f7df1e22',
@@ -73,12 +25,31 @@ function formatDate(iso) {
 const Accueil = () => {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
-  const [questions] = useState(QUESTIONS_DEMO)
+  const [questions, setQuestions] = useState([])
+  const [loading, setLoading] = useState(true)
   const [tri, setTri] = useState('recent')
   const [tagActif, setTagActif] = useState(searchParams.get('tag') || null)
   const [recherche, setRecherche] = useState(searchParams.get('search') || '')
 
   const token = localStorage.getItem('token')
+
+  useEffect(() => {
+    const charger = async () => {
+      setLoading(true)
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/questions`)
+        const result = await response.json()
+        if (response.ok) {
+          setQuestions(result.questions || [])
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    charger()
+  }, [])
 
   useEffect(() => {
     const s = searchParams.get('search')
@@ -87,31 +58,29 @@ const Accueil = () => {
     if (t) setTagActif(t)
   }, [searchParams])
 
-  // Tous les tags uniques pour le panneau lateral
   const tousLesTags = useMemo(() => {
     const set = new Set()
-    questions.forEach(q => q.tags.forEach(t => set.add(t)))
+    questions.forEach(q => (q.tags || []).forEach(t => set.add(t)))
     return Array.from(set)
   }, [questions])
 
-  // Filtrage + tri
   const questionsAffichees = useMemo(() => {
     let liste = [...questions]
 
-    if (tagActif) liste = liste.filter(q => q.tags.includes(tagActif))
+    if (tagActif) liste = liste.filter(q => (q.tags || []).includes(tagActif))
 
     if (recherche.trim()) {
       const s = recherche.toLowerCase()
       liste = liste.filter(q =>
         q.titre.toLowerCase().includes(s) ||
         q.contenu.toLowerCase().includes(s) ||
-        q.tags.some(t => t.includes(s))
+        (q.tags || []).some(t => t.includes(s))
       )
     }
 
-    if (tri === 'votes') liste.sort((a, b) => b.votes - a.votes)
-    else if (tri === 'recent') liste.sort((a, b) => new Date(b.date) - new Date(a.date))
-    else if (tri === 'non-resolues') liste = liste.filter(q => !q.resolue)
+    if (tri === 'votes') liste.sort((a, b) => (b.votes || 0) - (a.votes || 0))
+    else if (tri === 'recent') liste.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    else if (tri === 'non-resolues') liste = liste.filter(q => (q.nbReponses || 0) === 0)
 
     return liste
   }, [questions, tagActif, recherche, tri])
@@ -127,6 +96,10 @@ const Accueil = () => {
     setSearchParams(searchParams)
   }
 
+  if (loading) {
+    return <div style={{ maxWidth: '1264px', margin: '0 auto', padding: '40px 16px' }}>Chargement...</div>
+  }
+
   return (
     <div style={{
       maxWidth: '1264px', margin: '0 auto', padding: '24px 16px',
@@ -135,27 +108,14 @@ const Accueil = () => {
       color: '#232629',
     }}>
 
-      {/* ─── Sidebar gauche ─── */}
       <aside style={{ width: '164px', flexShrink: 0 }}>
         <nav style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-          {[
-            { label: 'Questions', active: true },
-            { label: 'Tags', to: '/accueil/tags' },
-            { label: 'Utilisateurs', to: '/accueil/utilisateurs' },
-          ].map(item => (
-            item.to ? (
-              <Link key={item.label} to={item.to} style={sideNavStyle(false)}>{item.label}</Link>
-            ) : (
-              <div key={item.label} style={sideNavStyle(true)}>{item.label}</div>
-            )
-          ))}
+          <div style={sideNavStyle(true)}>Questions</div>
         </nav>
       </aside>
 
-      {/* ─── Contenu central ─── */}
       <main style={{ flex: 1, minWidth: 0 }}>
 
-        {/* En-tete */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
           <div>
             <h1 style={{ fontSize: '27px', fontWeight: '400', margin: 0, color: '#1a1a1a' }}>
@@ -172,14 +132,11 @@ const Accueil = () => {
               padding: '9px 16px', borderRadius: '4px',
               fontSize: '13px', cursor: 'pointer', whiteSpace: 'nowrap',
             }}
-            onMouseEnter={e => e.currentTarget.style.background = '#0074cc'}
-            onMouseLeave={e => e.currentTarget.style.background = '#0a95ff'}
           >
             Poser une question
           </button>
         </div>
 
-        {/* Barre de filtre / tri */}
         <div style={{
           display: 'flex', alignItems: 'center', gap: '4px',
           borderBottom: '1px solid #e3e6e8', paddingBottom: '12px', marginBottom: '16px',
@@ -220,15 +177,6 @@ const Accueil = () => {
           )}
         </div>
 
-        {/* Bandeau filtre actif */}
-        {(tagActif || recherche) && (
-          <div style={{ fontSize: '13px', color: '#6a737c', marginBottom: '12px' }}>
-            {tagActif && <>Filtre par tag : <span style={badgeTagStyle(tagActif)}>{tagActif}</span> </>}
-            {recherche && <>Recherche : <strong>« {recherche} »</strong></>}
-          </div>
-        )}
-
-        {/* Liste des questions */}
         {questionsAffichees.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '60px 20px', color: '#6a737c' }}>
             <p style={{ fontSize: '15px', fontWeight: '600', marginBottom: '6px' }}>Aucune question trouvee</p>
@@ -238,8 +186,8 @@ const Accueil = () => {
           <div>
             {questionsAffichees.map(q => (
               <article
-                key={q.id}
-                onClick={() => navigate(`/accueil/question/${q.id}`)}
+                key={q._id}
+                onClick={() => navigate(`/accueil/question/${q._id}`)}
                 style={{
                   display: 'flex', gap: '16px',
                   padding: '16px 0',
@@ -247,24 +195,22 @@ const Accueil = () => {
                   cursor: 'pointer',
                 }}
               >
-                {/* Stats */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', minWidth: '64px', textAlign: 'right', flexShrink: 0 }}>
                   <div style={{ fontSize: '13px', color: '#3b4045' }}>
-                    <strong>{q.votes}</strong> votes
+                    <strong>{q.votes || 0}</strong> votes
                   </div>
                   <div style={{
                     fontSize: '13px',
                     padding: '3px 6px',
                     borderRadius: '4px',
-                    color: q.resolue ? '#fff' : '#3b4045',
-                    background: q.resolue ? '#5eba7d' : 'transparent',
-                    border: q.resolue ? 'none' : '1px solid #d6d9dc',
+                    color: q.nbReponses > 0 ? '#fff' : '#3b4045',
+                    background: q.nbReponses > 0 ? '#5eba7d' : 'transparent',
+                    border: q.nbReponses > 0 ? 'none' : '1px solid #d6d9dc',
                   }}>
-                    <strong>{q.reponses}</strong> reponses
+                    <strong>{q.nbReponses || 0}</strong> reponses
                   </div>
                 </div>
 
-                {/* Contenu */}
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <h2 style={{ fontSize: '16px', fontWeight: '400', margin: '0 0 6px', color: '#0a95ff' }}>
                     {q.titre}
@@ -273,7 +219,7 @@ const Accueil = () => {
                     {q.contenu.length > 150 ? q.contenu.slice(0, 150) + '...' : q.contenu}
                   </p>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                    {q.tags.map(tag => (
+                    {(q.tags || []).map(tag => (
                       <span
                         key={tag}
                         onClick={(e) => { e.stopPropagation(); choisirTag(tag) }}
@@ -283,7 +229,7 @@ const Accueil = () => {
                       </span>
                     ))}
                     <span style={{ fontSize: '12px', color: '#6a737c', marginLeft: 'auto' }}>
-                      {q.auteur} · {formatDate(q.date)}
+                      {q.auteur?.prenom} {q.auteur?.nom} · {formatDate(q.createdAt)}
                     </span>
                   </div>
                 </div>
@@ -293,7 +239,6 @@ const Accueil = () => {
         )}
       </main>
 
-      {/* ─── Sidebar droite : tags populaires ─── */}
       <aside style={{ width: '200px', flexShrink: 0 }}>
         <div style={{ border: '1px solid #e3e6e8', borderRadius: '6px', padding: '14px' }}>
           <h3 style={{ fontSize: '13px', fontWeight: '700', margin: '0 0 10px', color: '#1a1a1a' }}>
