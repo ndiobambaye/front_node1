@@ -81,12 +81,7 @@ const Navbar = () => {
         <div className="flex items-center gap-2 ml-auto">
           {token && user ? (
             <>
-              <Link
-                to="/accueil/poser"
-                className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1.5 rounded transition-colors"
-              >
-                Poser une question
-              </Link>
+            
 
               <div className="relative" ref={dropRef}>
                 <button
