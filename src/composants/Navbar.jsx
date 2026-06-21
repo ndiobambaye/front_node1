@@ -79,67 +79,34 @@ const Navbar = () => {
 
         {/* Droite */}
         <div className="flex items-center gap-2 ml-auto">
-          {token && user ? (
-            <>
-            
-
-              <div className="relative" ref={dropRef}>
-                <button
-                  onClick={() => setDropdown(v => !v)}
-                  className="w-8 h-8 rounded bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-xs font-bold"
-                >
-                  {initiales}
-                </button>
-
-                {dropdown && (
-                  <div className="absolute right-0 top-10 bg-white border border-gray-200 rounded-lg min-w-[210px] shadow-lg">
-                    <div className="px-4 py-3 border-b border-gray-100 bg-gray-50">
-                      <p className="text-sm font-semibold text-gray-900">{user.prenom} {user.nom}</p>
-                      <p className="text-xs text-gray-400 mt-0.5">{user.email}</p>
-                    </div>
-
-                    <Link
-                     to={`/accueil/profil/${user._id || user.id}`}
-                      onClick={() => setDropdown(false)}
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Mon profil
-                    </Link>
-
-                  
-
-                    {/* Tags retire temporairement
-                    <Link
-                      to="/accueil/tags"
-                      onClick={() => setDropdown(false)}
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Tags
-                    </Link>
-                    */}
-
-                    <div className="border-t border-gray-100" />
-
-                    <button
-                      onClick={deconnexion}
-                      className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
-                    >
-                      Deconnexion
-                    </button>
-                  </div>
-                )}
-              </div>
-            </>
-          ) : (
-            <>
-              <Link to="/" className="text-sm text-blue-500 hover:text-blue-600 px-3 py-1.5 font-medium">
-                Connexion
-              </Link>
-              <Link to="/inscription" className="text-sm bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded transition-colors">
-                S'inscrire
-              </Link>
-            </>
-          )}
+        {token && user ? (
+  <>
+    <Link
+      to={`/accueil/profil/${user._id || user.id}`}
+      className="text-sm text-gray-700 hover:text-blue-600 px-2 py-1.5"
+    >
+      Mon profil
+    </Link>
+    <button
+      onClick={deconnexion}
+      className="text-sm text-red-600 hover:text-red-700 px-2 py-1.5"
+    >
+      Deconnexion
+    </button>
+    <div className="w-8 h-8 rounded bg-yellow-400 text-gray-900 text-xs font-bold flex items-center justify-center">
+      {initiales}
+    </div>
+  </>
+) : (
+  <>
+    <Link to="/" className="text-sm text-blue-500 hover:text-blue-600 px-3 py-1.5 font-medium">
+      Connexion
+    </Link>
+    <Link to="/inscription" className="text-sm bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded transition-colors">
+      S'inscrire
+    </Link>
+  </>
+)}
         </div>
       </div>
     </header>
