@@ -111,13 +111,7 @@ const Navbar = () => {
                       Mon profil
                     </Link>
 
-                    <Link
-                      to="/accueil/poser"
-                      onClick={() => setDropdown(false)}
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Poser une question
-                    </Link>
+                  
 
                     {/* Tags retire temporairement
                     <Link
