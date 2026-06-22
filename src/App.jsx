@@ -9,6 +9,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Detail from './app/pages/Detail'
 import ModifierProfil from './app/pages/ModifierProfil'
 import Tags from './app/pages/Tags'
+import Utilisateurs from './app/pages/Utilisateurs'
 
 const App = () => {
 
@@ -29,6 +30,7 @@ const App = () => {
         { path: '/accueil/profil/:id', element: <ProfilUtilisateur /> },
         { path: '/accueil/question/:id', element: <Detail /> },
         { path: '/accueil/tags', element: <Tags /> },
+        { path: '/accueil/utilisateurs', element: <Utilisateurs /> },
         ]
     }
 

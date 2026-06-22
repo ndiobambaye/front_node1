@@ -108,6 +108,9 @@ const Navbar = () => {
     <Link to="/accueil/tags" className="text-sm text-gray-700 px-2.5 py-1.5 rounded hover:bg-gray-100 whitespace-nowrap">
   Tags
 </Link>
+<Link to="/accueil/utilisateurs" className="text-sm text-gray-700 px-2.5 py-1.5 rounded hover:bg-gray-100 whitespace-nowrap">
+  Utilisateurs
+</Link> 
   </>
 )}
         </div>
