@@ -28,6 +28,7 @@ const App = () => {
         { path: '/accueil/profil/modifier', element: <ModifierProfil /> },
         { path: '/accueil/profil/:id', element: <ProfilUtilisateur /> },
         { path: '/accueil/question/:id', element: <Detail /> },
+        { path: '/accueil/tags', element: <Tags /> },
         ]
     }
 
