@@ -2,9 +2,11 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <div className='w-full h-10 p-y-4 bg-black text-center text-white'>
-       <h1>footer</h1>
-    </div>
+    <footer className="w-full bg-gray-900 text-gray-300 text-center py-4 mt-auto">
+      <p className="text-sm">
+        © {new Date().getFullYear()} DevAsk — Tous droits reserves
+      </p>
+    </footer>
   )
 }
 

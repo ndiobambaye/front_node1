@@ -82,17 +82,17 @@ const Navbar = () => {
         {token && user ? (
   <>
     <Link
-      to={`/accueil/profil/${user._id || user.id}`}
-      className="text-sm text-gray-700 hover:text-blue-600 px-2 py-1.5"
-    >
-      Mon profil
-    </Link>
-    <button
-      onClick={deconnexion}
-      className="text-sm text-red-600 hover:text-red-700 px-2 py-1.5"
-    >
-      Deconnexion
-    </button>
+          to={`/accueil/profil/${user._id || user.id}`}
+         className="text-sm text-gray-700 hover:text-blue-600 px-3 py-1.5 border border-gray-300 rounded hover:bg-gray-50 transition-colors"
+>
+        Mon profil
+     </Link>
+        <button
+       onClick={deconnexion}
+        className="text-sm text-red-600 hover:text-red-700 px-3 py-1.5 border border-red-200 rounded hover:bg-red-50 transition-colors"
+>
+    Deconnexion
+      </button>
     <div className="w-8 h-8 rounded bg-yellow-400 text-gray-900 text-xs font-bold flex items-center justify-center">
       {initiales}
     </div>
