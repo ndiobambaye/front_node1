@@ -8,7 +8,7 @@ import ProfilUtilisateur from './app/pages/ProfilUtilisateur'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Detail from './app/pages/Detail'
 import ModifierProfil from './app/pages/ModifierProfil'
-
+import Tags from './app/pages/Tags'
 
 const App = () => {
 
