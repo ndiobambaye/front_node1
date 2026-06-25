@@ -1,21 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-
-const TAGS_COULEURS = {
-  react: '#61dafb22',
-  javascript: '#f7df1e22',
-  nodejs: '#3c873a22',
-  express: '#00000011',
-  java: '#f8981d22',
-  'spring-boot': '#6db33f22',
-  mysql: '#00618a22',
-}
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 function formatDate(iso) {
   const d = new Date(iso)
   const maintenant = new Date()
-  const diffMs = maintenant - d
-  const diffH = diffMs / 3600000
+  const diffH = (maintenant - d) / 3600000
   if (diffH < 24) {
     return d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
   }
@@ -97,51 +86,42 @@ const Accueil = () => {
   }
 
   if (loading) {
-    return <div style={{ maxWidth: '1264px', margin: '0 auto', padding: '40px 16px' }}>Chargement...</div>
+    return <div className="max-w-6xl mx-auto px-4 py-10 text-gray-500">Chargement...</div>
   }
 
   return (
-    <div style={{
-      maxWidth: '1264px', margin: '0 auto', padding: '24px 16px',
-      display: 'flex', gap: '24px',
-      fontFamily: "-apple-system, 'Segoe UI', Arial, sans-serif",
-      color: '#232629',
-    }}>
+    <div className="max-w-6xl mx-auto px-4 py-6 flex gap-6 flex-col md:flex-row">
 
-      <aside style={{ width: '164px', flexShrink: 0 }}>
-        <nav style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-          <div style={sideNavStyle(true)}>Questions</div>
+      {/* Sidebar gauche */}
+      <aside className="w-full md:w-40 flex-shrink-0">
+        <nav className="flex flex-row md:flex-col gap-1">
+          <div className="text-sm font-semibold text-gray-900 bg-indigo-50 px-3 py-2 rounded-lg border-l-[3px] border-indigo-500">
+            Questions
+          </div>
         </nav>
       </aside>
 
-      <main style={{ flex: 1, minWidth: 0 }}>
+      {/* Contenu principal */}
+      <main className="flex-1 min-w-0">
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
-          <div>
-            <h1 style={{ fontSize: '27px', fontWeight: '400', margin: 0, color: '#1a1a1a' }}>
+        <div className="flex justify-between items-start gap-3 mb-4 flex-wrap">
+          <div className="min-w-0">
+            <h1 className="font-heading text-2xl md:text-3xl font-bold text-gray-900 truncate">
               Toutes les questions
             </h1>
-            <p style={{ fontSize: '13px', color: '#6a737c', marginTop: '4px' }}>
+            <p className="text-sm text-gray-500 mt-1">
               {questionsAffichees.length} question{questionsAffichees.length !== 1 ? 's' : ''}
             </p>
           </div>
           <button
             onClick={() => token ? navigate('/accueil/poser') : navigate('/')}
-            style={{
-              background: '#0a95ff', color: '#fff', border: 'none',
-              padding: '9px 16px', borderRadius: '4px',
-              fontSize: '13px', cursor: 'pointer', whiteSpace: 'nowrap',
-            }}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2.5 rounded-lg transition-colors whitespace-nowrap shadow-sm flex-shrink-0"
           >
             Poser une question
           </button>
         </div>
 
-        <div style={{
-          display: 'flex', alignItems: 'center', gap: '4px',
-          borderBottom: '1px solid #e3e6e8', paddingBottom: '12px', marginBottom: '16px',
-          flexWrap: 'wrap',
-        }}>
+        <div className="flex items-center gap-2 border-b border-gray-200 pb-3 mb-4 flex-wrap">
           {[
             { key: 'recent', label: 'Recentes' },
             { key: 'votes', label: 'Votes' },
@@ -150,15 +130,11 @@ const Accueil = () => {
             <button
               key={opt.key}
               onClick={() => setTri(opt.key)}
-              style={{
-                fontSize: '13px',
-                padding: '6px 12px',
-                borderRadius: '4px',
-                border: '1px solid ' + (tri === opt.key ? '#0a95ff' : '#d6d9dc'),
-                background: tri === opt.key ? '#0a95ff' : '#fff',
-                color: tri === opt.key ? '#fff' : '#3b4045',
-                cursor: 'pointer',
-              }}
+              className={`text-sm px-3.5 py-2 rounded-lg border transition-colors ${
+                tri === opt.key
+                  ? 'bg-indigo-600 border-indigo-600 text-white'
+                  : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+              }`}
             >
               {opt.label}
             </button>
@@ -167,10 +143,7 @@ const Accueil = () => {
           {(tagActif || recherche) && (
             <button
               onClick={() => { setTagActif(null); setRecherche(''); setSearchParams({}) }}
-              style={{
-                fontSize: '12px', color: '#6a737c', background: 'none',
-                border: 'none', cursor: 'pointer', marginLeft: '8px', textDecoration: 'underline',
-              }}
+              className="text-xs text-gray-500 hover:text-gray-700 underline ml-2"
             >
               Effacer les filtres
             </button>
@@ -178,57 +151,51 @@ const Accueil = () => {
         </div>
 
         {questionsAffichees.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '60px 20px', color: '#6a737c' }}>
-            <p style={{ fontSize: '15px', fontWeight: '600', marginBottom: '6px' }}>Aucune question trouvee</p>
-            <p style={{ fontSize: '13px' }}>Soyez le premier a poser cette question.</p>
+          <div className="text-center py-16 px-4 text-gray-500">
+            <p className="text-base font-semibold mb-1.5 text-gray-700">Aucune question trouvee</p>
+            <p className="text-sm">Soyez le premier a poser cette question.</p>
           </div>
         ) : (
-          <div>
+          <div className="flex flex-col">
             {questionsAffichees.map(q => (
               <article
                 key={q._id}
                 onClick={() => navigate(`/accueil/question/${q._id}`)}
-                style={{
-                  display: 'flex', gap: '16px',
-                  padding: '16px 0',
-                  borderBottom: '1px solid #e3e6e8',
-                  cursor: 'pointer',
-                }}
+                className="flex gap-4 py-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50/60 -mx-2 px-2 rounded-lg transition-colors"
               >
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', minWidth: '64px', textAlign: 'right', flexShrink: 0 }}>
-                  <div style={{ fontSize: '13px', color: '#3b4045' }}>
-                    <strong>{q.votes || 0}</strong> votes
+                <div className="flex flex-col gap-2 min-w-[64px] flex-shrink-0 text-right">
+                  <div className="text-sm text-gray-600">
+                    <strong className="text-gray-900">{q.votes || 0}</strong> votes
                   </div>
-                  <div style={{
-                    fontSize: '13px',
-                    padding: '3px 6px',
-                    borderRadius: '4px',
-                    color: q.nbReponses > 0 ? '#fff' : '#3b4045',
-                    background: q.nbReponses > 0 ? '#5eba7d' : 'transparent',
-                    border: q.nbReponses > 0 ? 'none' : '1px solid #d6d9dc',
-                  }}>
-                    <strong>{q.nbReponses || 0}</strong> reponses
+                  <div
+                    className={`text-xs font-semibold px-2.5 py-1 rounded-full text-center ${
+                      q.nbReponses > 0
+                        ? 'bg-accent-50 text-accent-600'
+                        : 'border border-gray-200 text-gray-500'
+                    }`}
+                  >
+                    {q.nbReponses || 0} reponses
                   </div>
                 </div>
 
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <h2 style={{ fontSize: '16px', fontWeight: '400', margin: '0 0 6px', color: '#0a95ff' }}>
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-base font-semibold text-indigo-600 mb-1.5 truncate">
                     {q.titre}
                   </h2>
-                  <p style={{ fontSize: '13px', color: '#3b4045', margin: '0 0 10px', lineHeight: '1.5' }}>
-                    {q.contenu.length > 150 ? q.contenu.slice(0, 150) + '...' : q.contenu}
+                  <p className="text-sm text-gray-600 mb-2.5 leading-relaxed break-words text-ellipsis-2">
+                    {q.contenu}
                   </p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                  <div className="flex items-center gap-2 flex-wrap">
                     {(q.tags || []).map(tag => (
                       <span
                         key={tag}
                         onClick={(e) => { e.stopPropagation(); choisirTag(tag) }}
-                        style={badgeTagStyle(tag)}
+                        className="inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-md bg-indigo-50 text-indigo-700 hover:bg-indigo-100 cursor-pointer transition-colors max-w-[160px] truncate"
                       >
                         {tag}
                       </span>
                     ))}
-                    <span style={{ fontSize: '12px', color: '#6a737c', marginLeft: 'auto' }}>
+                    <span className="text-xs text-gray-400 ml-auto whitespace-nowrap flex-shrink-0">
                       {q.auteur?.prenom} {q.auteur?.nom} · {formatDate(q.createdAt)}
                     </span>
                   </div>
@@ -239,17 +206,18 @@ const Accueil = () => {
         )}
       </main>
 
-      <aside style={{ width: '200px', flexShrink: 0 }}>
-        <div style={{ border: '1px solid #e3e6e8', borderRadius: '6px', padding: '14px' }}>
-          <h3 style={{ fontSize: '13px', fontWeight: '700', margin: '0 0 10px', color: '#1a1a1a' }}>
+      {/* Sidebar droite */}
+      <aside className="w-full md:w-52 flex-shrink-0">
+        <div className="bg-white border border-gray-200 rounded-xl p-4">
+          <h3 className="text-sm font-semibold text-gray-900 mb-3">
             Tags populaires
           </h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+          <div className="flex flex-wrap gap-2">
             {tousLesTags.map(tag => (
               <span
                 key={tag}
                 onClick={() => choisirTag(tag)}
-                style={{ ...badgeTagStyle(tag), cursor: 'pointer' }}
+                className="inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-md bg-indigo-50 text-indigo-700 hover:bg-indigo-100 cursor-pointer transition-colors max-w-[120px] truncate"
               >
                 {tag}
               </span>
@@ -259,34 +227,6 @@ const Accueil = () => {
       </aside>
     </div>
   )
-}
-
-function sideNavStyle(active) {
-  return {
-    fontSize: '13px',
-    padding: '7px 12px',
-    borderRadius: '4px',
-    color: active ? '#1a1a1a' : '#3b4045',
-    background: active ? '#e3f1fc' : 'transparent',
-    fontWeight: active ? '600' : '400',
-    textDecoration: 'none',
-    borderLeft: active ? '3px solid #0a95ff' : '3px solid transparent',
-    paddingLeft: active ? '9px' : '12px',
-  }
-}
-
-function badgeTagStyle(tag) {
-  return {
-    display: 'inline-flex',
-    alignItems: 'center',
-    fontSize: '11px',
-    padding: '3px 8px',
-    borderRadius: '4px',
-    background: TAGS_COULEURS[tag] || '#e1ecf422',
-    color: '#39739d',
-    border: '1px solid #d9e6f2',
-    cursor: 'pointer',
-  }
 }
 
 export default Accueil

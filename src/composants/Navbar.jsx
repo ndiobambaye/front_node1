@@ -48,23 +48,21 @@ const Navbar = () => {
           <span className="text-lg font-bold text-gray-900">Ask</span>
         </Link>
 
-        {/* Liens nav */}
-        <nav className="hidden md:flex gap-1">
+        {/* Liens nav (identiques, connecte ou pas) */}
+        <nav className="hidden md:flex gap-1 flex-shrink-0">
           <Link to="/accueil" className="text-sm text-gray-600 px-3 py-2 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors whitespace-nowrap">
             Questions
           </Link>
-          {/* Tags et Utilisateurs retires temporairement - pages non encore creees
-          <Link to="/accueil/tags" className="text-sm text-gray-700 px-2.5 py-1.5 rounded hover:bg-gray-100 whitespace-nowrap">
+          <Link to="/accueil/tags" className="text-sm text-gray-600 px-3 py-2 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors whitespace-nowrap">
             Tags
           </Link>
-          <Link to="/accueil/utilisateurs" className="text-sm text-gray-700 px-2.5 py-1.5 rounded hover:bg-gray-100 whitespace-nowrap">
+          <Link to="/accueil/utilisateurs" className="text-sm text-gray-600 px-3 py-2 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors whitespace-nowrap">
             Utilisateurs
           </Link>
-          */}
         </nav>
 
         {/* Barre de recherche */}
-        <form onSubmit={handleSearch} className="relative flex-1 max-w-md">
+        <form onSubmit={handleSearch} className="relative flex-1 max-w-md min-w-0">
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm pointer-events-none">
             🔍
           </span>
@@ -78,41 +76,35 @@ const Navbar = () => {
         </form>
 
         {/* Droite */}
-        <div className="flex items-center gap-2 ml-auto">
-        {token && user ? (
-  <>
-    <Link
-          to={`/accueil/profil/${user._id || user.id}`}
-         className="text-sm text-gray-600 hover:text-indigo-600 px-3.5 py-2 border border-gray-200 rounded-lg hover:bg-indigo-50 hover:border-indigo-200 transition-colors"
->
-        Mon profil
-     </Link>
-        <button
-       onClick={deconnexion}
-        className="text-sm text-red-500 hover:text-red-600 px-3.5 py-2 border border-red-100 rounded-lg hover:bg-red-50 transition-colors"
->
-    Deconnexion
-      </button>
-    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-400 text-white text-xs font-bold flex items-center justify-center shadow-sm">
-      {initiales}
-    </div>
-  </>
-) : (
-  <>
-    <Link to="/" className="text-sm text-indigo-600 hover:text-indigo-700 px-3.5 py-2 font-medium">
-      Connexion
-    </Link>
-    <Link to="/inscription" className="text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors font-medium shadow-sm">
-      S'inscrire
-    </Link>
-    <Link to="/accueil/tags" className="text-sm text-gray-700 px-2.5 py-1.5 rounded hover:bg-gray-100 whitespace-nowrap">
-  Tags
-</Link>
-<Link to="/accueil/utilisateurs" className="text-sm text-gray-700 px-2.5 py-1.5 rounded hover:bg-gray-100 whitespace-nowrap">
-  Utilisateurs
-</Link> 
-  </>
-)}
+        <div className="flex items-center gap-2 ml-auto flex-shrink-0">
+          {token && user ? (
+            <>
+              <Link
+                to={`/accueil/profil/${user._id || user.id}`}
+                className="text-sm text-gray-600 hover:text-indigo-600 px-3.5 py-2 border border-gray-200 rounded-lg hover:bg-indigo-50 hover:border-indigo-200 transition-colors whitespace-nowrap"
+              >
+                Mon profil
+              </Link>
+              <button
+                onClick={deconnexion}
+                className="text-sm text-red-500 hover:text-red-600 px-3.5 py-2 border border-red-100 rounded-lg hover:bg-red-50 transition-colors whitespace-nowrap"
+              >
+                Deconnexion
+              </button>
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-400 text-white text-xs font-bold flex items-center justify-center shadow-sm flex-shrink-0">
+                {initiales}
+              </div>
+            </>
+          ) : (
+            <>
+              <Link to="/" className="text-sm text-indigo-600 hover:text-indigo-700 px-3.5 py-2 font-medium whitespace-nowrap">
+                Connexion
+              </Link>
+              <Link to="/inscription" className="text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors font-medium shadow-sm whitespace-nowrap">
+                S'inscrire
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>

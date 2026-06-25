@@ -182,7 +182,7 @@ import { toast } from 'react-toastify'
           <button
             type="submit"
             disabled={loading}
-            className="bg-blue-500 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium px-5 py-2.5 rounded transition-colors"
+            className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium px-5 py-2.5 rounded transition-colors"
           >
             {loading ? 'Publication...' : 'Publier la question'}
           </button>
