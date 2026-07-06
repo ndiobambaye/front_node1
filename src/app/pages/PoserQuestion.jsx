@@ -103,7 +103,7 @@ import { toast } from 'react-toastify'
             onChange={(e) => setTitre(e.target.value)}
             maxLength={150}
             placeholder="Ex : Comment trier un tableau d'objets par date en JavaScript ?"
-            className="w-full border border-gray-300 rounded px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors"
+            className="w-full border border-gray-300 rounded px-3 py-2 text-sm outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-colors"
           />
           <p className="text-xs text-gray-400 mt-1">
             Soyez precis comme si vous posiez la question a une autre personne.
@@ -121,14 +121,14 @@ import { toast } from 'react-toastify'
               <button
                 type="button"
                 onClick={() => setApercu(false)}
-                className={`text-xs px-4 py-2 ${!apercu ? 'bg-white text-blue-600 font-semibold border-b-2 border-blue-500' : 'text-gray-500'}`}
+                className={`text-xs px-4 py-2 ${!apercu ? 'bg-white text-primary-600 font-semibold border-b-2 border-primary-500' : 'text-gray-500'}`}
               >
                 Ecrire
               </button>
               <button
                 type="button"
                 onClick={() => setApercu(true)}
-                className={`text-xs px-4 py-2 ${apercu ? 'bg-white text-blue-600 font-semibold border-b-2 border-blue-500' : 'text-gray-500'}`}
+                className={`text-xs px-4 py-2 ${apercu ? 'bg-white text-primary-600 font-semibold border-b-2 border-primary-500' : 'text-gray-500'}`}
               >
                 Apercu
               </button>
@@ -155,11 +155,11 @@ import { toast } from 'react-toastify'
           <label className="block text-sm font-semibold text-gray-900 mb-1.5">
             Tags <span className="text-red-500">*</span>
           </label>
-          <div className="flex flex-wrap gap-1.5 border border-gray-300 rounded px-2 py-2 min-h-[42px] focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100">
+          <div className="flex flex-wrap gap-1.5 border border-gray-300 rounded px-2 py-2 min-h-[42px] focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-100">
             {tags.map(tag => (
-              <span key={tag} className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded bg-sky-50 text-sky-800 border border-sky-100">
+              <span key={tag} className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded bg-accent-50 text-accent-600 border border-accent-100">
                 {tag}
-                <button type="button" onClick={() => retirerTag(tag)} className="text-sky-500 hover:text-sky-800">×</button>
+                <button type="button" onClick={() => retirerTag(tag)} className="text-accent-500 hover:text-accent-600">×</button>
               </span>
             ))}
             {tags.length < 5 && (
@@ -182,7 +182,7 @@ import { toast } from 'react-toastify'
           <button
             type="submit"
             disabled={loading}
-            className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium px-5 py-2.5 rounded transition-colors"
+            className="bg-primary-600 hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium px-5 py-2.5 rounded transition-colors"
           >
             {loading ? 'Publication...' : 'Publier la question'}
           </button>

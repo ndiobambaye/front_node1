@@ -61,35 +61,41 @@ const Connexion = () => {
 
 
   return (
-      <div className="w-screen h-screen  flex items-center justify-center">
+      <div className="w-screen h-screen bg-paper flex items-center justify-center px-4">
 
-        <div className="w-full max-w-xl p-5 bg-white">
+        <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-card-hover border border-ink-100">
 
-            <h1 className="text-center font-bold text-xl">Connexion</h1>
+            <div className="flex items-center justify-center gap-1 mono-tag mb-6">
+              <span className="text-primary-500 text-lg font-medium">{'>'}</span>
+              <span className="text-lg font-medium text-ink-900">devask</span>
+              <span className="text-lg text-primary-500 cursor-blink">_</span>
+            </div>
 
-            <form  onSubmit={Laconnexion} >
-                <div className="flex flex-col gap-2">
-                    <label >Email</label>
+            <h1 className="text-center font-heading font-semibold text-2xl text-ink-900 mb-6">Connexion</h1>
+
+            <form onSubmit={Laconnexion} className="flex flex-col gap-4">
+                <div className="flex flex-col gap-1.5">
+                    <label className="text-sm font-medium text-ink-700">Email</label>
                     <input
-                        className="border py-1 px-3 border-black"
-                        type="email" 
+                        className="border border-ink-200 rounded-lg py-2.5 px-3 text-sm outline-none focus:border-mauve-400 focus:ring-2 focus:ring-mauve-100 transition-all"
+                        type="email"
                         placeholder="exemple@gmail.com"
                         value = {email}
                         onChange={ (e) => setEmail(e.target.value)}
                          />
                 </div>
-                <div className="flex flex-col gap-2 mt-2">
-                    <label >Mot de passe</label>
+                <div className="flex flex-col gap-1.5">
+                    <label className="text-sm font-medium text-ink-700">Mot de passe</label>
                     <input
-                        className="border py-1 px-3 border-black"
-                        type="password" 
+                        className="border border-ink-200 rounded-lg py-2.5 px-3 text-sm outline-none focus:border-mauve-400 focus:ring-2 focus:ring-mauve-100 transition-all"
+                        type="password"
                         placeholder="Mot de passe"
                         value = {password}
                         onChange={ (e) => setPassword(e.target.value)} />
                 </div>
 
-                <button type="submit"  className="w-full bg-black text-white mt-10 py-2 mb-2">Se connecter</button>
-                <Link to="/inscription" className="text-red-600 font-bold underline">S'inscrire</Link>
+                <button type="submit" className="w-full bg-mauve-700 hover:bg-mauve-600 text-paper font-medium rounded-lg mt-6 py-2.5 transition-colors">Se connecter</button>
+                <Link to="/inscription" className="text-center text-sm text-primary-500 hover:text-primary-600 font-medium">S'inscrire</Link>
             </form>
 
         </div>

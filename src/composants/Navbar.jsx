@@ -39,39 +39,40 @@ const Navbar = () => {
     : '?'
 
   return (
-    <header className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+    <header className="bg-mauve-700 border-b-2 border-primary-500 sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 h-[60px] flex items-center gap-4">
 
-        {/* Logo */}
-        <Link to="/accueil" className="flex items-center gap-1.5 flex-shrink-0">
-          <span className="bg-indigo-50 text-indigo-600 text-xs font-bold px-2.5 py-1 rounded-lg">Dev</span>
-          <span className="text-lg font-bold text-gray-900">Ask</span>
+        {/* Logo type terminal */}
+        <Link to="/accueil" className="flex items-center gap-0 flex-shrink-0 mono-tag">
+          <span className="text-primary-300 text-lg font-medium">{'>'}</span>
+          <span className="text-lg font-medium text-paper ml-1.5">devask</span>
+          <span className="text-lg text-primary-300 cursor-blink ml-0.5">_</span>
         </Link>
 
-        {/* Liens nav (identiques, connecte ou pas) */}
-        <nav className="hidden md:flex gap-1 flex-shrink-0">
-          <Link to="/accueil" className="text-sm text-gray-600 px-3 py-2 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors whitespace-nowrap">
-            Questions
+        {/* Liens nav */}
+        <nav className="hidden md:flex gap-1 flex-shrink-0 mono-tag text-[13px]">
+          <Link to="/accueil" className="text-mauve-100 px-3 py-2 hover:text-paper hover:bg-mauve-600 transition-colors whitespace-nowrap">
+            questions
           </Link>
-          <Link to="/accueil/tags" className="text-sm text-gray-600 px-3 py-2 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors whitespace-nowrap">
-            Tags
+          <Link to="/accueil/tags" className="text-mauve-100 px-3 py-2 hover:text-paper hover:bg-mauve-600 transition-colors whitespace-nowrap">
+            tags
           </Link>
-          <Link to="/accueil/utilisateurs" className="text-sm text-gray-600 px-3 py-2 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors whitespace-nowrap">
-            Utilisateurs
+          <Link to="/accueil/utilisateurs" className="text-mauve-100 px-3 py-2 hover:text-paper hover:bg-mauve-600 transition-colors whitespace-nowrap">
+            utilisateurs
           </Link>
         </nav>
 
         {/* Barre de recherche */}
         <form onSubmit={handleSearch} className="relative flex-1 max-w-md min-w-0">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm pointer-events-none">
-            🔍
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-mauve-300 text-xs mono-tag pointer-events-none">
+            /
           </span>
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Rechercher..."
-            className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50 outline-none focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all"
+            placeholder="rechercher..."
+            className="w-full pl-7 pr-3 py-2 border border-mauve-600 rounded-card text-sm bg-mauve-900/40 text-paper outline-none focus:bg-white focus:text-ink-900 focus:border-primary-400 focus:ring-1 focus:ring-primary-200 transition-all mono-tag placeholder:text-mauve-300"
           />
         </form>
 
@@ -81,26 +82,26 @@ const Navbar = () => {
             <>
               <Link
                 to={`/accueil/profil/${user._id || user.id}`}
-                className="text-sm text-gray-600 hover:text-indigo-600 px-3.5 py-2 border border-gray-200 rounded-lg hover:bg-indigo-50 hover:border-indigo-200 transition-colors whitespace-nowrap"
+                className="text-sm text-mauve-100 hover:text-paper px-3.5 py-2 border border-mauve-600 rounded-card hover:border-primary-300 transition-colors whitespace-nowrap"
               >
                 Mon profil
               </Link>
               <button
                 onClick={deconnexion}
-                className="text-sm text-red-500 hover:text-red-600 px-3.5 py-2 border border-red-100 rounded-lg hover:bg-red-50 transition-colors whitespace-nowrap"
+                className="text-sm text-primary-200 hover:text-paper px-3.5 py-2 border border-mauve-600 rounded-card hover:bg-mauve-600 transition-colors whitespace-nowrap"
               >
                 Deconnexion
               </button>
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-400 text-white text-xs font-bold flex items-center justify-center shadow-sm flex-shrink-0">
+              <div className="w-9 h-9 rounded-card bg-primary-500 text-white text-xs mono-tag font-medium flex items-center justify-center flex-shrink-0">
                 {initiales}
               </div>
             </>
           ) : (
             <>
-              <Link to="/" className="text-sm text-indigo-600 hover:text-indigo-700 px-3.5 py-2 font-medium whitespace-nowrap">
+              <Link to="/" className="text-sm text-primary-200 hover:text-primary-100 px-3.5 py-2 font-medium whitespace-nowrap">
                 Connexion
               </Link>
-              <Link to="/inscription" className="text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors font-medium shadow-sm whitespace-nowrap">
+              <Link to="/inscription" className="text-sm bg-primary-500 hover:bg-primary-400 text-paper px-4 py-2 rounded-card transition-colors font-medium whitespace-nowrap">
                 S'inscrire
               </Link>
             </>

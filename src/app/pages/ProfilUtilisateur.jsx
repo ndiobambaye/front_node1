@@ -69,7 +69,7 @@ const ProfilUtilisateur = () => {
 
       {/* En-tete profil */}
       <div className="flex gap-5 items-start mb-6 flex-wrap">
-        <div className="w-16 h-16 rounded-full bg-blue-500 text-white flex items-center justify-center text-2xl font-bold flex-shrink-0">
+        <div className="w-16 h-16 rounded-full bg-primary-500 text-white flex items-center justify-center text-2xl font-bold flex-shrink-0">
           {initiales(profil.prenom, profil.nom)}
         </div>
         <div className="flex-1 min-w-[200px]">
@@ -115,7 +115,7 @@ const ProfilUtilisateur = () => {
         <button
           onClick={() => setOnglet('questions')}
           className={`text-sm px-4 py-2 border-b-2 -mb-px transition-colors ${
-            onglet === 'questions' ? 'border-blue-500 text-blue-600 font-medium' : 'border-transparent text-gray-500'
+            onglet === 'questions' ? 'border-primary-500 text-primary-600 font-medium' : 'border-transparent text-gray-500'
           }`}
         >
           Questions ({questions.length})
@@ -123,7 +123,7 @@ const ProfilUtilisateur = () => {
         <button
           onClick={() => setOnglet('reponses')}
           className={`text-sm px-4 py-2 border-b-2 -mb-px transition-colors ${
-            onglet === 'reponses' ? 'border-blue-500 text-blue-600 font-medium' : 'border-transparent text-gray-500'
+            onglet === 'reponses' ? 'border-primary-500 text-primary-600 font-medium' : 'border-transparent text-gray-500'
           }`}
         >
           Reponses ({reponses.length})
@@ -146,10 +146,10 @@ const ProfilUtilisateur = () => {
                   <strong>{q.votes || 0}</strong> votes
                 </div>
                 <div className="flex-1">
-                  <div className="text-sm text-blue-600">{q.titre}</div>
+                  <div className="text-sm text-primary-600">{q.titre}</div>
                   <div className="flex gap-1.5 mt-1.5">
                     {(q.tags || []).map(t => (
-                      <span key={t} className="text-[11px] px-1.5 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-100">
+                      <span key={t} className="text-[11px] px-1.5 py-0.5 rounded bg-accent-50 text-accent-600 border border-accent-100">
                         {t}
                       </span>
                     ))}
@@ -176,7 +176,7 @@ const ProfilUtilisateur = () => {
                   <strong>{r.votes || 0}</strong> votes
                 </div>
                 <div className="flex-1">
-                  <div className="text-sm text-blue-600">{r.question?.titre || 'Question supprimee'}</div>
+                  <div className="text-sm text-primary-600">{r.question?.titre || 'Question supprimee'}</div>
                   <p className="text-sm text-gray-600 mt-1">
                     {(r.contenu || '').slice(0, 120)}{r.contenu?.length > 120 ? '...' : ''}
                   </p>

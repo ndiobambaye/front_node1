@@ -42,9 +42,9 @@ const Tags = () => {
             <div
               key={tag._id}
               onClick={() => navigate(`/accueil?tag=${tag._id}`)}
-              className="border border-gray-200 rounded p-4 cursor-pointer hover:border-blue-300 hover:bg-blue-50 transition-colors"
+              className="border border-gray-200 rounded p-4 cursor-pointer hover:border-primary-300 hover:bg-primary-50 transition-colors"
             >
-              <span className="inline-block text-sm px-2 py-1 rounded bg-sky-50 text-sky-800 border border-sky-100 mb-2">
+              <span className="inline-block text-sm px-2 py-1 rounded bg-accent-50 text-accent-600 border border-accent-100 mb-2">
                 {tag._id}
               </span>
               <p className="text-xs text-gray-500">

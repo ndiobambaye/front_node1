@@ -64,7 +64,7 @@ const ModifierProfil = () => {
             type="text"
             value={prenom}
             onChange={(e) => setPrenom(e.target.value)}
-            className="w-full border border-gray-300 rounded px-3 py-2 text-sm outline-none focus:border-blue-500"
+            className="w-full border border-gray-300 rounded px-3 py-2 text-sm outline-none focus:border-mauve-400"
           />
         </div>
 
@@ -74,7 +74,7 @@ const ModifierProfil = () => {
             type="text"
             value={nom}
             onChange={(e) => setNom(e.target.value)}
-            className="w-full border border-gray-300 rounded px-3 py-2 text-sm outline-none focus:border-blue-500"
+            className="w-full border border-gray-300 rounded px-3 py-2 text-sm outline-none focus:border-mauve-400"
           />
         </div>
 
@@ -84,14 +84,14 @@ const ModifierProfil = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-gray-300 rounded px-3 py-2 text-sm outline-none focus:border-blue-500"
+            className="w-full border border-gray-300 rounded px-3 py-2 text-sm outline-none focus:border-mauve-400"
           />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white text-sm font-medium px-5 py-2.5 rounded transition-colors mt-2"
+          className="bg-mauve-700 hover:bg-mauve-600 disabled:opacity-50 text-white text-sm font-medium px-5 py-2.5 rounded transition-colors mt-2"
         >
           {loading ? 'Enregistrement...' : 'Enregistrer les modifications'}
         </button>
